@@ -14,16 +14,36 @@ namespace ArrayPractice
     {
         static Random rand = new Random();
 
-        int vx = rand.Next(-20, 21);
-        int vy = rand.Next(-20, 21);
+       const int LabelMax = 10;
+        int[] vx = new int[LabelMax];
+        int[] vy = new int[LabelMax];
+        Label[] labels = new Label[LabelMax];
         int score = 100;
 
         public Form1()
         {
             InitializeComponent();
 
+            for (int i = 0; i < 100; i++)
+            {
+                vx[LabelMax] = rand.Next(-20, 21);
+                vy[LabelMax] = rand.Next(-20, 21);
+
+                labels[i] = new Label();
+                labels[i].AutoSize = true;
+                labels[i].Text = "★";
+                Controls.Add(labels[i]);
+
+                labels[i].Left = rand.Next(ClientSize.Width - labels[i].Width);
+                labels[i].Top = rand.Next(ClientSize.Height - labels[i].Height);
+            }
+
             label1.Left = rand.Next(ClientSize.Width - label1.Width);
             label1.Top = rand.Next(ClientSize.Height - label1.Height);
+            label2.Left = rand.Next(ClientSize.Width - label2.Width);
+            label2.Top = rand.Next(ClientSize.Height - label2.Height);
+            label3.Left = rand.Next(ClientSize.Width - label3.Width);
+            label3.Top = rand.Next(ClientSize.Height - label3.Height);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -31,35 +51,72 @@ namespace ArrayPractice
             score--;
             scoreLabel.Text = $"Score {score:000}";
 
-            label1.Left += vx;
-            label1.Top += vy;
-
-            if (label1.Left < 0)
-            {
-                vx = Math.Abs(vx);
-            }
-            if (label1.Top < 0)
-            {
-                vy = Math.Abs(vy);
-            }
-            if (label1.Right > ClientSize.Width)
-            {
-                vx = -Math.Abs(vx);
-            }
-            if (label1.Bottom > ClientSize.Height)
-            {
-                vy = -Math.Abs(vy);
-            }
-
             Point fpos = PointToClient(MousePosition);
 
-            if ((fpos.X >= label1.Left)
-                && (fpos.X < label1.Right)
-                && (fpos.Y >= label1.Top)
-                && (fpos.Y < label1.Bottom))
+            for (int i = 0; i < 100; i++)
+            {
+                labels[i].Left += vx[i];
+                labels[i].Top += vy[i];
+
+                if (label1.Left < 0)
+                {
+                    vx[i] = Math.Abs(vx[i]);
+                }
+                if (label1.Top < 0)
+                {
+                    vy[i] = Math.Abs(vy[i]);
+                }
+                if (label1.Right > ClientSize.Width)
+                {
+                    vx[i] = -Math.Abs(vx[i]);
+                }
+                if (label1.Bottom > ClientSize.Height)
+                {
+                    vy[i] = -Math.Abs(vy[i]);
+                }
+                if ((fpos.X >= labels[i].Left)
+               && (fpos.X < labels[i].Right)
+               && (fpos.Y >= labels[i].Top)
+               && (fpos.Y < labels[i].Bottom))
+                {
+                    label1.Visible = false;
+                }
+            }
+
+            if ((label1.Visible == false)
+              && (label2.Visible == false)
+              && (label3.Visible == false))
             {
                 timer1.Enabled = false;
             }
+
+
+
+        }
+
+        private void scoreLabel_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (i == 2)
+                {
+                    continue;
+                }
+                if (i == 5)
+                {
+                    break;
+                }
+                MessageBox.Show( "2のあと"+ i.ToString());
+        }
+
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
