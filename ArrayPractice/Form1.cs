@@ -26,8 +26,8 @@ namespace ArrayPractice
 
             for (int i = 0; i < 100; i++)
             {
-                vx[LabelMax] = rand.Next(-20, 21);
-                vy[LabelMax] = rand.Next(-20, 21);
+                vx[i] = rand.Next(-20, 21);
+                vy[i] = rand.Next(-20, 21);
 
                 labels[i] = new Label();
                 labels[i].AutoSize = true;
@@ -81,19 +81,9 @@ namespace ArrayPractice
                 {
                     label1.Visible = false;
                 }
+
             }
-
-            if ((label1.Visible == false)
-              && (label2.Visible == false)
-              && (label3.Visible == false))
-            {
-                timer1.Enabled = false;
-            }
-
-
-
         }
-
         private void scoreLabel_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < 10; i++)
